@@ -1,5 +1,6 @@
 package com.devsuperior.dslist.services;
 
+import com.devsuperior.dslist.dto.GameDTO;
 import com.devsuperior.dslist.dto.GameMinDTO;
 import com.devsuperior.dslist.entities.Game;
 import com.devsuperior.dslist.repositories.GameRepository;
@@ -15,9 +16,13 @@ public class GameService {
 
 	@Autowired
 	private GameRepository gameRepository;
-	
 
-	
+
+	@Transactional(readOnly = true)
+	public GameDTO findById(@PathVariable Long listId) {
+		Game result = gameRepository.findById(listId).get();
+		return new GameDTO(result);
+	}
 	@Transactional(readOnly = true)
 	public List<GameMinDTO> findAll() {
 		List<Game> result = gameRepository.findAll();
